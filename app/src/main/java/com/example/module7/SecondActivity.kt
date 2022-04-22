@@ -9,7 +9,7 @@ class SecondActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_second)
 
         val message = intent.getStringExtra(EXTRA_MESSAGE)
 
