@@ -9,7 +9,7 @@
 
     <Button
         android:id="@+id/btn_add"
-        android:onClick="createBlockView"
+        android:onClick="addVariable"
         android:layout_width="84dp"
         android:layout_height="65dp"
         android:layout_marginEnd="28dp"
@@ -21,6 +21,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.039" />
+
+    <EditText
+        android:id="@+id/varName"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/varVal"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginTop="150dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/container"
