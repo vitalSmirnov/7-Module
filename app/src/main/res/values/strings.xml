@@ -3,4 +3,6 @@
     <string name="PersonName">Enter your name</string>
     <string name="submit">Submit</string>
     <string name="welcome">Welcome</string>
+    <string name="VarName">Name</string>
+    <string name="VarVal">Value</string>
 </resources>
