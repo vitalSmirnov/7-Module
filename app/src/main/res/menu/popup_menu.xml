@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/red"
+        android:id="@+id/calc"
         android:icon="@drawable/calculator"
         android:iconTintMode="src_in"
         android:title="Math" />
     <item
-        android:id="@+id/yellow"
+        android:id="@+id/comp"
         android:icon="@drawable/compression"
         android:iconTintMode="src_in"
         android:title="Vars" />
     <item
-        android:id="@+id/green"
+        android:id="@+id/clip"
         android:icon="@drawable/clipboard"
         android:iconTintMode="src_in"
         android:title="if" />
