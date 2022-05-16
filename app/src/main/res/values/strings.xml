@@ -5,4 +5,6 @@
     <string name="welcome">Welcome</string>
     <string name="VarName">Name</string>
     <string name="VarVal">Value</string>
+    <string name="expression_view">expression</string>
+    <string name="equivalent">=</string>
 </resources>

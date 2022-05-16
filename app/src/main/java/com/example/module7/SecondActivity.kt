@@ -1,83 +1,159 @@
 package com.example.module7
 
-import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.Dialog
-import android.app.PendingIntent.getActivity
-import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.module7.databinding.*
+import com.example.module7.model.Math
+import com.example.module7.model.Var
 
+private lateinit var bindingValBlock: ValBlockBinding
+private lateinit var bindingMath: MathBlockBinding
 
 class SecondActivity : AppCompatActivity() {
-    @SuppressLint("ClickableViewAccessibility")
+    private val bindingMain by lazy { ActivitySecondBinding.inflate(layoutInflater)}
+    private var adapter: Adapter = Adapter(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_second)
-        val btnPopup = findViewById<Button>(R.id.btn_popup)
-        btnPopup.setOnClickListener(){
-            var popup = PopupMenu(this, btnPopup)
+        setContentView(bindingMain.root)
+
+        val btnPopup = bindingMain.btnPopup
+        btnPopup.setOnClickListener {
+            val popup = PopupMenu(this, btnPopup)
             popup.inflate(R.menu.popup_menu)
             popup.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    1 -> {addVariable()
-                        true}
-                    else -> {addVariable()
-                    true}
-                }
+                println(it.itemId)
+                showsDialog(it.itemId)
+                true
             }
             popup.show()
         }
 
+        bindingMain.recyclerView.adapter = adapter
+        bindingMain.recyclerView.setHasFixedSize(true)
+        bindingMain.recyclerView.layoutManager = LinearLayoutManager(this)
+
     }
 
-    class CustomDialogFragment : DialogFragment() {
-        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-            val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
+    fun addVariable(key: String, amount: String) {
+        val list = Var(adapter.blocks.size, key, amount)
+        adapter.addVars(list)
+    }
 
-            return builder
-                .setTitle("Определить переменную")
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setMessage("Для закрытия окна нажмите ОК")
-                .setPositiveButton("OK", null)
-                .setNegativeButton("Отмена", null)
-                .create()
+    fun addMath(key: String, expression: String) {
+        val list = Math(adapter.blocks.size, key, expression)
+        adapter.addMath(list)
+    }
+
+
+    fun showsDialog(id: Int) {
+        when (id) {
+            R.id.Vars -> {
+                addvarsDialog()
+                true
+            }
+            R.id.math -> {
+                mathDialog()
+                true
+            }// read the listItemPositionForPopupMenu here
+            R.id.ifs -> {
+                conditionDialog()
+                true
+            }
+            else -> {
+                false
+            }
         }
     }
 
-    class Vars {
-        val numbersMap = mutableMapOf<String, String>()
+    fun addvarsDialog()  {
 
-        fun puttingData(key: String, value:String ){
-            numbersMap.put(key,value)
-            println(numbersMap)
+        val bindingDialog = DialogValBinding.inflate(layoutInflater)
+
+        val onClickListener = DialogInterface.OnClickListener { dialog, it ->
+            when (it) {
+                Dialog.BUTTON_POSITIVE -> {
+                    val key = bindingDialog.editValName
+                    val k = key.text.toString()
+                    val amount = bindingDialog.editVal
+                    val a = amount.text.toString()
+                    addVariable(k,a)
+                }
+                Dialog.BUTTON_NEGATIVE -> {
+                    dialog.cancel()
+                }
+            }
         }
-    }
-    val vav:Vars = Vars()
-    fun addVariable(){
-//        val v = vav
-//        val editNameVar = findViewById<EditText>(R.id.varName)
-//        val showVars = findViewById<TextView>(R.id.varView)
-//        val varName = editNameVar.text.toString()
-//        val editAmountVar = findViewById<EditText>(R.id.varVal)
-//        val varAmount = editAmountVar.text.toString()
-//        v.puttingData(varName, varAmount)
-//        editNameVar.setText("")
-//        editAmountVar.setText("")
-//        showVars.setText("${v.numbersMap}")
-        val mainContainer = findViewById<LinearLayout>(R.id.codeContainer)
-        val block = layoutInflater.inflate(R.layout.val_block, mainContainer, true)
+
+        val builder = AlertDialog.Builder(this)
+        builder
+            .setView(bindingDialog.root)
+            .setPositiveButton("Confirm", onClickListener)
+            .setNegativeButton("cancel", onClickListener)
+
+        builder.show()
     }
 
 
-    fun showDialog(view: View) {
-        val dialog = CustomDialogFragment();
-        dialog.show(supportFragmentManager, "custom");
+    fun conditionDialog(){
+
     }
 
+    fun mathDialog()  {
+        val bindingDialog = DialogMathBinding.inflate(layoutInflater)
+
+        val onClickListener = DialogInterface.OnClickListener { dialog, it ->
+            when (it) {
+                Dialog.BUTTON_POSITIVE -> {
+                    val key = bindingDialog.valName
+                    val k = key.text.toString()
+                    val amount = bindingDialog.expression
+                    val a = amount.text.toString()
+                    addMath(k,a)
+                }
+                Dialog.BUTTON_NEGATIVE -> {
+                    dialog.cancel()
+                }
+            }
+        }
+
+        val builder = AlertDialog.Builder(this)
+        builder
+            .setView(bindingDialog.root)
+            .setPositiveButton("Confirm", onClickListener)
+            .setNegativeButton("cancel", onClickListener)
+
+        builder.show()
+    }
+
+//    fun setUpListVars () {
+//        val listVars = vav.getData()
+//        val data = (0..listVars.size).map {
+//            mapOf(
+//                VAR_TITTLE to it.toString(),
+//                VAR_DESRIPTION to listVars[it.toString()]
+//            )
+//        }
+//    val adapter = SimpleAdapter(
+//        this,
+//        data,
+//        android.R.layout.simple_list_item_activated_1,
+//        arrayOf(VAR_TITTLE, VAR_DESRIPTION),
+//        intArrayOf(android.R.id.text1,android.R.id.text2)
+//        )
+//        bindingDialog.spinne
+//    }
+//
+//
+//    companion object {
+//        @JvmStatic var VAR_TITTLE = ""
+//        @JvmStatic var VAR_DESRIPTION = ""
+//    }
 
 }
 
