@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -9,50 +8,36 @@
         android:id="@+id/container"
         android:layout_width="wrap_content"
         android:layout_height="65dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        android:background="@color/purple_500"
+        android:background="#2196F3"
         android:gravity="start"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-black"
+            android:text="print"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/textViewName"
+            android:id="@+id/printText"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginHorizontal="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/equvalent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_weight="0.5"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center"
-            android:text="="
-            android:textAlignment="gravity"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/expressionView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_weight="2"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
-
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

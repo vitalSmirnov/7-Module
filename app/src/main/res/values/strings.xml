@@ -5,6 +5,8 @@
     <string name="welcome">Welcome</string>
     <string name="VarName">Name</string>
     <string name="VarVal">Value</string>
-    <string name="expression_view">expression</string>
+    <string name="expression_view">Expression</string>
     <string name="equivalent">=</string>
+    <string name="print">sthg to print</string>
+    <string name="cond">Condition</string>
 </resources>

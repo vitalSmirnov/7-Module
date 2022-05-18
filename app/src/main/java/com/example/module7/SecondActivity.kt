@@ -8,15 +8,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.module7.databinding.*
-import com.example.module7.model.Math
-import com.example.module7.model.Var
+import com.example.module7.model.*
 
-private lateinit var bindingValBlock: ValBlockBinding
-private lateinit var bindingMath: MathBlockBinding
 
 class SecondActivity : AppCompatActivity() {
     private val bindingMain by lazy { ActivitySecondBinding.inflate(layoutInflater)}
     private var adapter: Adapter = Adapter(this)
+    private val _data = Data(this)
+//    val dialog = DialogApp()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +32,10 @@ class SecondActivity : AppCompatActivity() {
             }
             popup.show()
         }
+        val btnStart = bindingMain.btnStart
+        btnStart.setOnClickListener{
+            startCompile()
+        }
 
         bindingMain.recyclerView.adapter = adapter
         bindingMain.recyclerView.setHasFixedSize(true)
@@ -40,49 +43,78 @@ class SecondActivity : AppCompatActivity() {
 
     }
 
-    fun addVariable(key: String, amount: String) {
-        val list = Var(adapter.blocks.size, key, amount)
+
+
+    private fun addVariable(pair :Pair<String, String>) {
+        val list = Var(adapter.blocks.size, pair.first, pair.second)
+        _data.putData(pair.first,pair.second)
         adapter.addVars(list)
     }
+    private fun addCondition(exp: String) {
+        val list = Conditions(adapter.blocks.size,exp)
+        adapter.addCond(list)
+    }
 
-    fun addMath(key: String, expression: String) {
-        val list = Math(adapter.blocks.size, key, expression)
+    private fun addMath(pair :Pair<String, String>) {
+        val list = Math(adapter.blocks.size, pair.first, pair.second)
+        _data.putOperations(list)
         adapter.addMath(list)
     }
 
-
-    fun showsDialog(id: Int) {
-        when (id) {
-            R.id.Vars -> {
-                addvarsDialog()
-                true
-            }
-            R.id.math -> {
-                mathDialog()
-                true
-            }// read the listItemPositionForPopupMenu here
-            R.id.ifs -> {
-                conditionDialog()
-                true
-            }
-            else -> {
-                false
-            }
-        }
+    private fun addPrint(print : String) {
+        val list = Print(adapter.blocks.size, print)
+        _data.putOperations(list)
+        adapter.addPrint(list)
     }
 
-    fun addvarsDialog()  {
+
+    private fun showsDialog(id: Int) {
+            when (id) {
+                R.id.Vars -> {
+                    addvarsDialog()
+                }
+                R.id.math -> {
+                    mathDialog()
+                }
+                R.id.ifs -> {
+                    conditionDialog()
+                }
+                R.id.print -> {
+                    printDialog()
+                }
+                else -> {
+
+                }
+            }
+    }
+    fun addOutputDialog(output: List<String>)  {
+        val bindingDialog = DialogOutputBinding.inflate(layoutInflater)
+
+        bindingDialog.output.text = output.toString()
+
+        val builder = AlertDialog.Builder(this)
+        builder
+            .setView(bindingDialog.root)
+            .setTitle("Output")
+            .setPositiveButton("Confirm", null)
+            .setNegativeButton("cancel", null)
+
+        builder.show()
+    }
+
+    fun addvarsDialog() : Pair<String, String> {
 
         val bindingDialog = DialogValBinding.inflate(layoutInflater)
-
+        var k = ""
+        var a = ""
         val onClickListener = DialogInterface.OnClickListener { dialog, it ->
             when (it) {
                 Dialog.BUTTON_POSITIVE -> {
                     val key = bindingDialog.editValName
-                    val k = key.text.toString()
+                    k = key.text.toString()
                     val amount = bindingDialog.editVal
-                    val a = amount.text.toString()
-                    addVariable(k,a)
+                    a = amount.text.toString()
+                    addVariable(Pair(k,a))
                 }
                 Dialog.BUTTON_NEGATIVE -> {
                     dialog.cancel()
@@ -97,24 +129,76 @@ class SecondActivity : AppCompatActivity() {
             .setNegativeButton("cancel", onClickListener)
 
         builder.show()
+        return Pair(k,a)
     }
 
 
-    fun conditionDialog(){
+    fun conditionDialog(): String{
+        val binding = DialogConditionBinding.inflate(layoutInflater)
+        var exp = ""
+        val onClickListener = DialogInterface.OnClickListener{
+                dialog, it ->
+            when (it) {
+                Dialog.BUTTON_POSITIVE -> {
+                    exp = binding.exp.text.toString()
+                    addCondition(exp)
+                }
+                Dialog.BUTTON_NEGATIVE -> {
+                    dialog.cancel()
+                }
+            }
+        }
 
+        val builder = AlertDialog.Builder(this)
+        builder
+            .setView(binding.root)
+            .setPositiveButton("Confirm", onClickListener)
+            .setNegativeButton("Cancel", onClickListener)
+
+        builder.show()
+        return exp
     }
 
-    fun mathDialog()  {
+    fun printDialog(): String {
+        val binding = DialogPrintBinding.inflate(layoutInflater)
+        var exp = ""
+
+        val onClickListener = DialogInterface.OnClickListener{
+                dialog, it ->
+            when (it) {
+                Dialog.BUTTON_POSITIVE -> {
+                    exp = binding.printEdit.text.toString()
+                    addPrint(exp)
+                }
+                Dialog.BUTTON_NEGATIVE -> {
+                    dialog.cancel()
+                }
+            }
+        }
+
+        val builder = AlertDialog.Builder(this)
+        builder
+            .setView(binding.root)
+            .setPositiveButton("Confirm", onClickListener)
+            .setNegativeButton("Cancel", onClickListener)
+
+        builder.show()
+
+        return exp
+    }
+
+    fun mathDialog() : Pair<String, String>   {
         val bindingDialog = DialogMathBinding.inflate(layoutInflater)
-
+        var k= ""
+        var a= ""
         val onClickListener = DialogInterface.OnClickListener { dialog, it ->
             when (it) {
                 Dialog.BUTTON_POSITIVE -> {
                     val key = bindingDialog.valName
-                    val k = key.text.toString()
+                    k = key.text.toString()
                     val amount = bindingDialog.expression
-                    val a = amount.text.toString()
-                    addMath(k,a)
+                    a = amount.text.toString()
+                    addMath(Pair(k,a))
                 }
                 Dialog.BUTTON_NEGATIVE -> {
                     dialog.cancel()
@@ -129,31 +213,11 @@ class SecondActivity : AppCompatActivity() {
             .setNegativeButton("cancel", onClickListener)
 
         builder.show()
+        return Pair(k,a)
     }
-
-//    fun setUpListVars () {
-//        val listVars = vav.getData()
-//        val data = (0..listVars.size).map {
-//            mapOf(
-//                VAR_TITTLE to it.toString(),
-//                VAR_DESRIPTION to listVars[it.toString()]
-//            )
-//        }
-//    val adapter = SimpleAdapter(
-//        this,
-//        data,
-//        android.R.layout.simple_list_item_activated_1,
-//        arrayOf(VAR_TITTLE, VAR_DESRIPTION),
-//        intArrayOf(android.R.id.text1,android.R.id.text2)
-//        )
-//        bindingDialog.spinne
-//    }
-//
-//
-//    companion object {
-//        @JvmStatic var VAR_TITTLE = ""
-//        @JvmStatic var VAR_DESRIPTION = ""
-//    }
+    fun startCompile(){
+        _data.startCompiler()
+    }
 
 }
 

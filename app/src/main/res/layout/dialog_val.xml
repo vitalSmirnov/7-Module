@@ -7,20 +7,21 @@
 
     <LinearLayout
         android:id="@+id/mainContainer"
-        android:layout_width="228dp"
-        android:layout_height="224dp"
-        android:layout_marginStart="88dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@color/white"
         android:gravity="center|center_horizontal"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <LinearLayout
-            android:id="@+id/stringContainer"
-            android:layout_width="191dp"
-            android:layout_height="60dp"
+            android:id="@+id/container"
+            android:layout_width="245dp"
+            android:layout_height="65dp"
             android:background="@color/teal_700"
             android:gravity="center"
             android:orientation="horizontal"
@@ -32,39 +33,46 @@
                 android:id="@+id/editValName"
                 style="@android:style/Widget.Material.EditText"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginHorizontal="10dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
                 android:background="#FFFFFF"
                 android:hint="@string/VarVal"
                 android:inputType="textPersonName"
+                android:paddingHorizontal="2dp"
+                android:paddingVertical="2dp"
                 android:singleLine="true"
                 android:tag="editValName"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/teal_700"
+                android:textSize="20dp"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
                 android:id="@+id/equvalent"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-black"
                 android:gravity="center|center_vertical"
                 android:text="@string/equivalent"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:textSize="20dp" />
 
             <EditText
                 android:id="@+id/editVal"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginHorizontal="10dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
                 android:background="@color/white"
                 android:hint="@string/VarVal"
                 android:inputType="textPersonName"
+                android:paddingHorizontal="2dp"
+                android:paddingVertical="2dp"
                 android:singleLine="true"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/teal_700"
+                android:textSize="20dp"
                 tools:ignore="TouchTargetSizeCheck" />
 
         </LinearLayout>

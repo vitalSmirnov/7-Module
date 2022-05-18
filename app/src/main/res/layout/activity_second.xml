@@ -26,7 +26,8 @@
             android:background="@color/teal_700"
             android:text="start"
             android:textColor="#FFFFFF"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:ignore="TextContrastCheck" />
 
         <Button
             android:id="@+id/btn_popup"
