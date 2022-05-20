@@ -11,7 +11,7 @@
         android:layout_height="65dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
-        android:background="@color/purple_500"
+        android:background="@drawable/block"
         android:gravity="start"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
