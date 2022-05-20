@@ -10,7 +10,7 @@
         android:id="@+id/container"
         android:layout_width="wrap_content"
         android:layout_height="65dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:background="@color/teal_700"
         android:gravity="start"
         android:orientation="horizontal"
@@ -19,14 +19,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:fontFamily="sans-serif-black"
-            android:text="print"
+            android:text="@string/print"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />

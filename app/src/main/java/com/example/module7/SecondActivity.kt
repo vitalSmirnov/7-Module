@@ -15,7 +15,6 @@ class SecondActivity : AppCompatActivity() {
     private val bindingMain by lazy { ActivitySecondBinding.inflate(layoutInflater)}
     private var adapter: Adapter = Adapter(this)
     private val _data = Data(this)
-//    val dialog = DialogApp()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +36,11 @@ class SecondActivity : AppCompatActivity() {
             startCompile()
         }
 
+        val btnClear = bindingMain.btnClear
+        btnClear.setOnClickListener{
+            clearData()
+        }
+
         bindingMain.recyclerView.adapter = adapter
         bindingMain.recyclerView.setHasFixedSize(true)
         bindingMain.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -52,6 +56,7 @@ class SecondActivity : AppCompatActivity() {
     }
     private fun addCondition(exp: String) {
         val list = Conditions(adapter.blocks.size,exp)
+        _data.putOperations(list)
         adapter.addCond(list)
     }
 
@@ -65,6 +70,16 @@ class SecondActivity : AppCompatActivity() {
         val list = Print(adapter.blocks.size, print)
         _data.putOperations(list)
         adapter.addPrint(list)
+    }
+    fun addEnd(){
+        val list = End(adapter.blocks.size)
+        _data.putOperations(list)
+        adapter.addEnd(list)
+    }
+    fun addInput(_input: String){
+        val list = Input(adapter.blocks.size, _input)
+        _data.putOperations(list)
+        adapter.addInput(list)
     }
 
 
@@ -82,27 +97,46 @@ class SecondActivity : AppCompatActivity() {
                 R.id.print -> {
                     printDialog()
                 }
+                R.id.end -> {
+                    addEnd()
+                }
+                R.id.input ->{
+                    inputDialog()
+                }
                 else -> {
 
                 }
             }
     }
-    fun addOutputDialog(output: List<String>)  {
-        val bindingDialog = DialogOutputBinding.inflate(layoutInflater)
 
-        bindingDialog.output.text = output.toString()
+    private fun inputDialog() {
+        val binding = DialogInputBinding.inflate(layoutInflater)
+        var exp = ""
+
+        val onClickListener = DialogInterface.OnClickListener{
+                dialog, it ->
+            when (it) {
+                Dialog.BUTTON_POSITIVE -> {
+                    exp = binding.printEdit.text.toString()
+                    addInput(exp)
+                }
+                Dialog.BUTTON_NEGATIVE -> {
+                    dialog.cancel()
+                }
+            }
+        }
 
         val builder = AlertDialog.Builder(this)
         builder
-            .setView(bindingDialog.root)
-            .setTitle("Output")
-            .setPositiveButton("Confirm", null)
-            .setNegativeButton("cancel", null)
+            .setView(binding.root)
+            .setPositiveButton("Confirm", onClickListener)
+            .setNegativeButton("Cancel", onClickListener)
 
         builder.show()
     }
 
-    fun addvarsDialog() : Pair<String, String> {
+
+    fun addvarsDialog() {
 
         val bindingDialog = DialogValBinding.inflate(layoutInflater)
         var k = ""
@@ -129,11 +163,10 @@ class SecondActivity : AppCompatActivity() {
             .setNegativeButton("cancel", onClickListener)
 
         builder.show()
-        return Pair(k,a)
     }
 
 
-    fun conditionDialog(): String{
+    fun conditionDialog(){
         val binding = DialogConditionBinding.inflate(layoutInflater)
         var exp = ""
         val onClickListener = DialogInterface.OnClickListener{
@@ -156,10 +189,9 @@ class SecondActivity : AppCompatActivity() {
             .setNegativeButton("Cancel", onClickListener)
 
         builder.show()
-        return exp
     }
 
-    fun printDialog(): String {
+    fun printDialog(){
         val binding = DialogPrintBinding.inflate(layoutInflater)
         var exp = ""
 
@@ -184,10 +216,9 @@ class SecondActivity : AppCompatActivity() {
 
         builder.show()
 
-        return exp
     }
 
-    fun mathDialog() : Pair<String, String>   {
+    fun mathDialog() {
         val bindingDialog = DialogMathBinding.inflate(layoutInflater)
         var k= ""
         var a= ""
@@ -213,8 +244,13 @@ class SecondActivity : AppCompatActivity() {
             .setNegativeButton("cancel", onClickListener)
 
         builder.show()
-        return Pair(k,a)
     }
+
+    fun clearData(){
+        adapter.clear()
+        _data.clear()
+    }
+
     fun startCompile(){
         _data.startCompiler()
     }

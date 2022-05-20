@@ -3,22 +3,34 @@
     <item
         android:id="@+id/Vars"
         android:icon="@drawable/calculator"
+        android:iconTint="@color/purple_200"
         android:iconTintMode="src_in"
-        android:title="Vars"
-        />
+        android:title="@string/vars" />
     <item
         android:id="@+id/math"
         android:icon="@drawable/compression"
         android:iconTintMode="src_in"
-        android:title="Math" />
+        android:title="@string/math" />
     <item
         android:id="@+id/ifs"
         android:icon="@drawable/clipboard"
         android:iconTintMode="src_in"
-        android:title="Conditions" />
+        android:title="@string/conditions" />
+    <item
+        android:id="@+id/end"
+        android:icon="@drawable/clipboard"
+        android:iconTint="@color/purple_200"
+        android:iconTintMode="src_in"
+        android:title="@string/end" />
+    <item
+        android:id="@+id/input"
+        android:icon="@drawable/clipboard"
+        android:iconTintMode="src_in"
+        android:title="@string/input" />
     <item
         android:id="@+id/print"
         android:icon="@drawable/clipboard"
         android:iconTintMode="src_in"
-        android:title="Print" />
+        android:title="@string/print" />
+
 </menu>

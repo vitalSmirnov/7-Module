@@ -32,7 +32,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-black"
-                android:text="if"
+                android:text="@string/condition"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"
@@ -45,7 +45,7 @@
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="15dp"
                 android:background="#FFFFFF"
-                android:hint="@string/cond"
+                android:hint="@string/conditions"
                 android:inputType="textPersonName"
                 android:textAlignment="center" />
 

@@ -1,15 +1,13 @@
 package com.example.module7
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.module7.databinding.ConditionBlockBinding
-import com.example.module7.databinding.MathBlockBinding
-import com.example.module7.databinding.PrintBlockBinding
-import com.example.module7.databinding.ValBlockBinding
+import com.example.module7.databinding.*
 import com.example.module7.model.*
 
 class Adapter(private val context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -61,6 +59,23 @@ class Adapter(private val context: Context): RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    inner class InputViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val binding = InputBlockBinding.bind(view)
+
+        fun bind(expression: Input) = with(binding) {
+            val data = expression.getData()
+            inputText.text = data
+        }
+    }
+
+
+    inner class EndViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val binding = EndBlockBinding.bind(view)
+        fun bind(expression: End) = with(binding) {
+            Log.d("tst", expression.toString())
+        }
+    }
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder{
@@ -78,6 +93,12 @@ class Adapter(private val context: Context): RecyclerView.Adapter<RecyclerView.V
             R.layout.print_block ->{
                 PrintViewHolder(view)
             }
+            R.layout.end_block ->{
+                EndViewHolder(view)
+            }
+            R.layout.input_block -> {
+                InputViewHolder(view)
+            }
             else -> throw Exception()
         }
     }
@@ -89,6 +110,8 @@ class Adapter(private val context: Context): RecyclerView.Adapter<RecyclerView.V
                 is MathViewHolder -> holder.bind(expression as Math)
                 is ConditionViewHolder -> holder.bind(expression as Conditions)
                 is PrintViewHolder -> holder.bind(expression as Print)
+                is EndViewHolder -> holder.bind(expression as End)
+                is InputViewHolder -> holder.bind(expression as Input)
                 else -> throw Exception()
             }
         }
@@ -105,6 +128,8 @@ class Adapter(private val context: Context): RecyclerView.Adapter<RecyclerView.V
             is Math -> R.layout.math_block
             is Conditions -> R.layout.condition_block
             is Print -> R.layout.print_block
+            is End -> R.layout.end_block
+            is Input -> R.layout.input_block
             else -> throw Exception()
         }
     }
@@ -125,5 +150,16 @@ class Adapter(private val context: Context): RecyclerView.Adapter<RecyclerView.V
         blocks.add(print)
         notifyDataSetChanged()
     }
-
+    fun addEnd(end: Expression) {
+        blocks.add(end)
+        notifyDataSetChanged()
+    }
+    fun addInput(_input : Expression){
+        blocks.add(_input)
+        notifyDataSetChanged()
+    }
+    fun clear(){
+        blocks = mutableListOf<Expression>()
+        notifyDataSetChanged()
+    }
 }

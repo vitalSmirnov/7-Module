@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="10dp"
-                android:text="Output:"
+                android:text="@string/output"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"

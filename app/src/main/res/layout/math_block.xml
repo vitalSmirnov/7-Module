@@ -37,7 +37,7 @@
             android:layout_weight="0.5"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
-            android:text="="
+            android:text="@string/equivalent"
             android:textAlignment="gravity"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
