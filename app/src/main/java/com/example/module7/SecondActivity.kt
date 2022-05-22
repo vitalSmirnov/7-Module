@@ -12,7 +12,7 @@ import com.example.module7.model.*
 
 
 class SecondActivity : AppCompatActivity() {
-    private val bindingMain by lazy { ActivitySecondBinding.inflate(layoutInflater)}
+    private val bindingMain by lazy { ActivitySecondBinding.inflate(layoutInflater) }
     private var adapter: Adapter = Adapter(this)
     private val _data = Data(this)
 
@@ -32,12 +32,12 @@ class SecondActivity : AppCompatActivity() {
             popup.show()
         }
         val btnStart = bindingMain.btnStart
-        btnStart.setOnClickListener{
+        btnStart.setOnClickListener {
             startCompile()
         }
 
         val btnClear = bindingMain.btnClear
-        btnClear.setOnClickListener{
+        btnClear.setOnClickListener {
             clearData()
         }
 
@@ -48,35 +48,37 @@ class SecondActivity : AppCompatActivity() {
     }
 
 
-
-    private fun addVariable(pair :Pair<String, String>) {
+    private fun addVariable(pair: Pair<String, String>) {
         val list = Var(adapter.blocks.size, pair.first, pair.second)
-        _data.putData(pair.first,pair.second)
+        _data.putData(pair.first, pair.second)
         adapter.addVars(list)
     }
+
     private fun addCondition(exp: String) {
-        val list = Conditions(adapter.blocks.size,exp)
+        val list = Conditions(adapter.blocks.size, exp)
         _data.putOperations(list)
         adapter.addCond(list)
     }
 
-    private fun addMath(pair :Pair<String, String>) {
+    private fun addMath(pair: Pair<String, String>) {
         val list = Math(adapter.blocks.size, pair.first, pair.second)
         _data.putOperations(list)
         adapter.addMath(list)
     }
 
-    private fun addPrint(print : String) {
+    private fun addPrint(print: String) {
         val list = Print(adapter.blocks.size, print)
         _data.putOperations(list)
         adapter.addPrint(list)
     }
-    fun addEnd(){
+
+    fun addEnd() {
         val list = End(adapter.blocks.size)
         _data.putOperations(list)
         adapter.addEnd(list)
     }
-    fun addInput(_input: String){
+
+    fun addInput(_input: String) {
         val list = Input(adapter.blocks.size, _input)
         _data.putOperations(list)
         adapter.addInput(list)
@@ -84,37 +86,36 @@ class SecondActivity : AppCompatActivity() {
 
 
     private fun showsDialog(id: Int) {
-            when (id) {
-                R.id.Vars -> {
-                    addvarsDialog()
-                }
-                R.id.math -> {
-                    mathDialog()
-                }
-                R.id.ifs -> {
-                    conditionDialog()
-                }
-                R.id.print -> {
-                    printDialog()
-                }
-                R.id.end -> {
-                    addEnd()
-                }
-                R.id.input ->{
-                    inputDialog()
-                }
-                else -> {
-
-                }
+        when (id) {
+            R.id.Vars -> {
+                addvarsDialog()
             }
+            R.id.math -> {
+                mathDialog()
+            }
+            R.id.ifs -> {
+                conditionDialog()
+            }
+            R.id.print -> {
+                printDialog()
+            }
+            R.id.end -> {
+                addEnd()
+            }
+            R.id.input -> {
+                inputDialog()
+            }
+            else -> {
+
+            }
+        }
     }
 
     private fun inputDialog() {
         val binding = DialogInputBinding.inflate(layoutInflater)
         var exp = ""
 
-        val onClickListener = DialogInterface.OnClickListener{
-                dialog, it ->
+        val onClickListener = DialogInterface.OnClickListener { dialog, it ->
             when (it) {
                 Dialog.BUTTON_POSITIVE -> {
                     exp = binding.printEdit.text.toString()
@@ -148,7 +149,7 @@ class SecondActivity : AppCompatActivity() {
                     k = key.text.toString()
                     val amount = bindingDialog.editVal
                     a = amount.text.toString()
-                    addVariable(Pair(k,a))
+                    addVariable(Pair(k, a))
                 }
                 Dialog.BUTTON_NEGATIVE -> {
                     dialog.cancel()
@@ -166,11 +167,10 @@ class SecondActivity : AppCompatActivity() {
     }
 
 
-    fun conditionDialog(){
+    fun conditionDialog() {
         val binding = DialogConditionBinding.inflate(layoutInflater)
         var exp = ""
-        val onClickListener = DialogInterface.OnClickListener{
-                dialog, it ->
+        val onClickListener = DialogInterface.OnClickListener { dialog, it ->
             when (it) {
                 Dialog.BUTTON_POSITIVE -> {
                     exp = binding.exp.text.toString()
@@ -191,12 +191,11 @@ class SecondActivity : AppCompatActivity() {
         builder.show()
     }
 
-    fun printDialog(){
+    fun printDialog() {
         val binding = DialogPrintBinding.inflate(layoutInflater)
         var exp = ""
 
-        val onClickListener = DialogInterface.OnClickListener{
-                dialog, it ->
+        val onClickListener = DialogInterface.OnClickListener { dialog, it ->
             when (it) {
                 Dialog.BUTTON_POSITIVE -> {
                     exp = binding.printEdit.text.toString()
@@ -220,8 +219,8 @@ class SecondActivity : AppCompatActivity() {
 
     fun mathDialog() {
         val bindingDialog = DialogMathBinding.inflate(layoutInflater)
-        var k= ""
-        var a= ""
+        var k = ""
+        var a = ""
         val onClickListener = DialogInterface.OnClickListener { dialog, it ->
             when (it) {
                 Dialog.BUTTON_POSITIVE -> {
@@ -229,7 +228,7 @@ class SecondActivity : AppCompatActivity() {
                     k = key.text.toString()
                     val amount = bindingDialog.expression
                     a = amount.text.toString()
-                    addMath(Pair(k,a))
+                    addMath(Pair(k, a))
                 }
                 Dialog.BUTTON_NEGATIVE -> {
                     dialog.cancel()
@@ -246,12 +245,12 @@ class SecondActivity : AppCompatActivity() {
         builder.show()
     }
 
-    fun clearData(){
+    fun clearData() {
         adapter.clear()
         _data.clear()
     }
 
-    fun startCompile(){
+    fun startCompile() {
         _data.startCompiler()
     }
 

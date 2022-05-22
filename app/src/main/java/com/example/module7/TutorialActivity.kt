@@ -3,6 +3,7 @@ package com.example.module7
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 
 class TutorialActivity : AppCompatActivity() {
